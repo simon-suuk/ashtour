@@ -20,6 +20,41 @@
 			} else {
 				var mobile_system = '';
 			}
+			
+					/*
+		 * Google Maps documentation: http://code.google.com/apis/maps/documentation/javascript/basics.html
+		 * Geolocation documentation: http://dev.w3.org/geo/api/spec-source.html
+		 */
+		$( document ).on( "pageinit", "#map-page", function() {
+		    var defaultLatLng = new google.maps.LatLng(5.76, -0.22);  // Default to when no geolocation support
+		    if ( navigator.geolocation ) {
+			function success(pos) {
+			    // Location found, show map with these coordinates
+			    drawMap(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+			}
+			function fail(error) {
+			    drawMap(defaultLatLng);  // Failed to find location, show default map
+			}
+			// Find the users current position.  Cache the location for 5 minutes, timeout after 6 seconds
+			navigator.geolocation.getCurrentPosition(success, fail, {maximumAge: 500000, enableHighAccuracy:true, timeout: 6000});
+		    } else {
+			drawMap(defaultLatLng);  // No geolocation support, show default map
+		    }
+		    function drawMap(latlng) {
+			var myOptions = {
+			    zoom: 10,
+			    center: latlng,
+			    mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+			// Add an overlay to the map of current lat/lng
+			var marker = new google.maps.Marker({
+			    position: latlng,
+			    map: map,
+			    title: "Greetings!"
+			});
+		    }
+		});
 		</script>
 
 		<script src="js/lib/jquery.js"></script>
@@ -28,6 +63,7 @@
 		<script src="js/app/bootstrap.js"></script>
 		<script src="js/lib/jquery.mobile.js"></script>
 		<style>
+			#map-page, #map-canvas { width: 100%; height: 100%; padding: 0; }
 			.ui-selectmenu.ui-popup .ui-input-search {
 				margin-left: .5em;
 				margin-right: .5em;
@@ -53,6 +89,7 @@
 
 	</head>
 	<body>
+		
 		<!--home page -->
 		<div data-role="page" id="landingPage" style="background: white" data-theme="a|b">
 			<div data-role="header" style="text-shadow: none; background:#ae3544">
@@ -65,6 +102,13 @@
 				</div>
 				
 				<h3>Take a Tour of our Beautiful Campus</h3>
+				
+				<a href="#map-page" data-transition="flip">
+					<button >
+						View Map
+					</button>
+				</a>
+				<br />
 				
 				<a href="#libPage" data-transition="flip">
 					<button >
@@ -93,6 +137,15 @@
 			</div><!-- /footer -->
 		</div>
 		<!-- /home page -->
+		
+		<div data-role="page" id="map-page" data-url="map-page">
+			<div data-role="header" data-theme="a">
+				<h1>Ashesi Map</h1>
+			</div>
+			<div role="main" class="ui-content" id="map-canvas">
+				<!-- map loads here... -->
+			</div>
+		</div>
 		
 		<!--lib page -->
 		<div data-role="page" id="libPage" style="background: white">
