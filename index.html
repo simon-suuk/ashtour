@@ -8,6 +8,7 @@
 		<meta name="msapplication-tap-highlight" content="no">
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 
+		<!-- Path to your custom app styles-->
 		<link rel="stylesheet"  href="css/jquery.mobile.structure.css" />
 		<link rel="stylesheet" href="css/jquery.mobile.theme.css" />
 		
@@ -28,31 +29,6 @@
 		<!-- your scripts here -->
 		
 		<script src="scripts/jquery.mobile.js"></script>
-	
-		<style>
-			#map-page, #map-canvas { width: 100%; height: 100%; padding: 0; }
-			.ui-selectmenu.ui-popup .ui-input-search {
-				margin-left: .5em;
-				margin-right: .5em;
-			}
-			.ui-selectmenu.ui-dialog .ui-content {
-				padding-top: 0;
-			}
-			.ui-selectmenu.ui-dialog .ui-selectmenu-list {
-				margin-top: 0;
-			}
-			.ui-selectmenu.ui-popup .ui-selectmenu-list li.ui-first-child .ui-btn {
-				border-top-width: 1px;
-				-webkit-border-radius: 0;
-				border-radius: 0;
-			}
-			.ui-selectmenu.ui-dialog .ui-header {
-				border-bottom-width: 1px;
-			}
-			a {
-				text-decoration: none;
-			}
-		</style>
 	
 	</head>
 	
@@ -204,48 +180,4 @@
 		<script type="text/javascript" src="scripts/index.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8XRQUcAm1FICt61AN_ISnmuINbDBEs68"></script>
 	</body>
-	<script>
-		$.mobile.document
-		// "filter-menu-menu" is the ID generated for the listview when it is created
-		// by the custom selectmenu plugin. Upon creation of the listview widget we
-		// want to prepend an input field to the list to be used for a filter.
-		.on("listviewcreate", "#filter-menu-menu", function(e) {
-			var input,
-			    listbox = $("#filter-menu-listbox"),
-			    form = listbox.jqmData("filter-form"),
-			    listview = $(e.target);
-			// We store the generated form in a variable attached to the popup so we
-			// avoid creating a second form/input field when the listview is
-			// destroyed/rebuilt during a refresh.
-			if (!form) {
-				input = $("<input data-type='search'></input>");
-				form = $("<form></form>").append(input);
-				input.textinput();
-				$("#filter-menu-listbox").prepend(form).jqmData("filter-form", form);
-			}
-			// Instantiate a filterable widget on the newly created listview and
-			// indicate that the generated input is to be used for the filtering.
-			listview.filterable({
-				input : input
-			});
-		})
-		// The custom select list may show up as either a popup or a dialog,
-		// depending how much vertical room there is on the screen. If it shows up
-		// as a dialog, then the form containing the filter input field must be
-		// transferred to the dialog so that the user can continue to use it for
-		// filtering list items.
-		//
-		// After the dialog is closed, the form containing the filter input is
-		// transferred back into the popup.
-		.on("pagebeforeshow pagehide", "#filter-menu-dialog", function(e) {
-			var form = $("#filter-menu-listbox").jqmData("filter-form"),
-			    placeInDialog = (e.type === "pagebeforeshow" ),
-			    destination = placeInDialog ? $(e.target).find(".ui-content") : $("#filter-menu-listbox");
-			form.find("input")
-			// Turn off the "inset" option when the filter input is inside a dialog
-			// and turn it back on when it is placed back inside the popup, because
-			// it looks better that way.
-			.textinput("option", "inset", !placeInDialog).end().prependTo(destination);
-		});
-	</script>
 </html>
