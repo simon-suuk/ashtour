@@ -55,43 +55,6 @@
 				text-decoration: none;
 			}
 		</style>
-
-		<script>
-		/*
-		 * Google Maps documentation: http://code.google.com/apis/maps/documentation/javascript/basics.html
-		 * Geolocation documentation: http://dev.w3.org/geo/api/spec-source.html
-		 */
-		$( document ).on( "pageinit", "#map-page", function() {
-		    var defaultLatLng = new google.maps.LatLng(34.0983425, -118.3267434);  // Default to Hollywood, CA when no geolocation support
-		    if ( navigator.geolocation ) {
-		        function success(pos) {
-		            // Location found, show map with these coordinates
-		            drawMap(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-		        }
-		        function fail(error) {
-		            drawMap(defaultLatLng);  // Failed to find location, show default map
-		        }
-		        // Find the users current position.  Cache the location for 5 minutes, timeout after 6 seconds
-		        navigator.geolocation.getCurrentPosition(success, fail, {maximumAge: 500000, enableHighAccuracy:true, timeout: 6000});
-		    } else {
-		        drawMap(defaultLatLng);  // No geolocation support, show default map
-		    }
-		    function drawMap(latlng) {
-		        var myOptions = {
-		            zoom: 10,
-		            center: latlng,
-		            mapTypeId: google.maps.MapTypeId.ROADMAP
-		        };
-		        var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
-		        // Add an overlay to the map of current lat/lng
-		        var marker = new google.maps.Marker({
-		            position: latlng,
-		            map: map,
-		            title: "Greetings!"
-		        });
-		    }
-		});
-	</script>
 	
 	</head>
 	
@@ -110,13 +73,6 @@
 					</div>
 					
 					<h3>Take a Tour of our Beautiful Campus</h3>
-					
-					<a href="#map-page" data-transition="flip">
-						<button >
-							View Map
-						</button>
-					</a>
-					<br />
 					
 					<a href="#libPage" data-transition="flip">
 						<button >
@@ -159,10 +115,10 @@
 			
 			<div data-role="content">   
 				<div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
-					<div role="main" class="ui-content" id="map-canvas" style="height:350px;">
-			        		<!-- map loads here... -->
-			    		</div>
-				</div>
+				<div role="main" class="ui-content" id="map-canvas" style="height:350px">
+		        		<!-- map loads here... -->
+		    		</div>
+			</div>
 			</div>
 		</div>      
 		
@@ -179,6 +135,13 @@
 				</div>
 		
 				<h1>Ashesi's Library</h1>
+				
+				<a href="#map-page" data-transition="flip">
+						<button >
+							View Map
+						</button>
+					</a>
+				
 				<h5>Ashesi's library is primarily digital, with subscriptions to a number of electronic information resources, including the PERI databases which give access to over 30,000 scholarly journals. Ashesi's library is not limited to the library building; it reaches out, with cutting edge information, into faculty and administrative offices, classrooms, cafeterias, and even outdoor gathering spaces.</h5>
 			</div><!-- /content -->
 			
