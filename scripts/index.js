@@ -14,8 +14,6 @@
 				destinationType : destinationType.DATA_URL
 			});
 		}
-		  
-		alert(destinationType.DATA_URL);  
 	
 	};
 	function onPhotoDataSuccess(imageURI) {
